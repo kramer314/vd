@@ -1,0 +1,47 @@
+{
+  "debug": true,
+  "src_path": "./src/",
+  "build_path": "./build/",
+  "flags": {
+    "ieee754": {
+      "prod": true,
+      "debug": true,
+      "list": ["-fno-unsafe-math-optimizations", "-frounding-math",
+        "-fsignaling-nans"]
+    },
+    "openmp": {
+      "prod": true,
+      "debug": true,
+      "list": ["-fopenmp", "-frecursive"]
+    },
+    "prod_blas": {
+      "prod": true,
+      "debug": false,
+      "list": ["-fexternal-blas, -lblas"]
+    },
+    "prod_general": {
+      "prod": true,
+      "debug": false,
+      "list": ["-O3", "-march=native"]
+    },
+    "debug_general": {
+      "prod": false,
+      "debug": true,
+      "list": ["-Og", "-g3", "-std=f2008", "-fcheck=all", "-fbacktrace",
+        "-ffpe-trap=zero,overflow,underflow"]
+    },
+    "debug_warnings": {
+      "prod": false,
+      "debug": true,
+      "list": ["-Wall", "-Wextra", "-Wconversion", "-Wunused-parameter"]
+    }
+  },
+  "lib_path_root": "./deps/",
+  "libs": [
+    {
+      "name": "flib",
+      "path": "fortran-lib/build",
+      "use_root": true
+    }
+  ]
+}
