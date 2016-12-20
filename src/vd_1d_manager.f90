@@ -190,20 +190,16 @@ contains
     integer(ip) :: psi_i_x
 
     ! Update left VD objects
-    !$omp parallel do private(i_x, psi_i_x)
     do i_x = 1, this%nxl
        psi_i_x = this%xl_min + (i_x - 1)
        call this%vdl_arr(i_x)%update(psi_arr(psi_i_x - 1 : psi_i_x + 1))
     end do
-    !$omp end parallel do
 
     ! Update right VD objects
-    !$omp parallel do private(i_x, psi_i_x)
     do i_x = 1, this%nxr
        psi_i_x = this%xr_min + (i_x - 1)
        call this%vdr_arr(i_x)%update(psi_arr(psi_i_x - 1 : psi_i_x + 1))
     end do
-    !$omp end parallel do
 
   end subroutine vd_1d_manager_update
 

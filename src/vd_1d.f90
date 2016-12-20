@@ -75,7 +75,7 @@ contains
     else
        deallocate(this%vd_p_arr)
     end if
-    
+
   end subroutine vd_1d_obj_cleanup
 
   subroutine vd_1d_obj_update(this, psi_arr)
@@ -109,8 +109,9 @@ contains
 
     else if (jx .gt. this%j_eps) then
 
-       px_Stdev = sqrt(px_var)
+       px_stdev = sqrt(px_var)
        px_min = px_mu - this%vd_np_stdev * px_stdev
+       px_max = px_mu + this%vd_np_stdev * px_stdev
 
        i_px_min = numerics_linspace_index(px_min, this%px_range)
        i_px_max = numerics_linspace_index(px_max, this%px_range)
@@ -118,13 +119,23 @@ contains
        call vd_validate_quantum_update(i_px_min, i_px_max, this%npx, valid)
 
        if (valid) then
-          do i_px = i_px_min, i_px_max
-             px = this%px_range(i_px)
-             gx = dists_gaussian(px, px_mu, px_var)
-             this%vd_p_arr(i_px) = this%vd_p_arr(i_px) + scale * gx
-          end do
+
+          if (i_px_min .eq. i_px_max) then
+
+             this%vd_p_arr(i_px_min) = this%vd_p_arr(i_px_min) + scale / this%dpx
+
+          else
+
+             do i_px = i_px_min, i_px_max
+                px = this%px_range(i_px)
+                gx = dists_gaussian(px, px_mu, px_var)
+                this%vd_p_arr(i_px) = this%vd_p_arr(i_px) + scale * gx
+             end do
+          end if
+
+          
        end if
-       
+
     end if
   end subroutine vd_1d_obj_update
 end module vd_1d

@@ -270,9 +270,12 @@ contains
 
        valid = .false.
 
+    else if (i_p_min .eq. i_p_max) then
+       valid =  .false.
+
     else
 
-       ! If p_mmin < this%p_min, we start at this%p_min
+       ! If p_min < this%p_min, we start at this%p_min
        if (i_p_min .eq. -1_ip) then
           i_p_min = 1_ip
        end if
@@ -281,7 +284,6 @@ contains
        if (i_p_max .eq. 0_ip) then
           i_p_max = np
        end if
-
     end if
   end subroutine vd_validate_quantum_update
 

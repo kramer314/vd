@@ -7,4 +7,4 @@ Import("lib_paths")
 
 sources = Glob("*.f90")
 
-env.Library("vd", source=Glob("*.f90"))
+env.SharedLibrary("vd", source=Glob("*.f90"))
